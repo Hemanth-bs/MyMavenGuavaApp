@@ -18,7 +18,7 @@ public class App {
         File destFile = new File("destination.txt");
 
         try {
-            // 🔥 Create source file if it doesn't exist
+            // Create source file if it doesn't exist
             if (!sourceFile.exists()) {
                 System.out.println("source.txt not found. Creating file...");
                 FileUtils.writeStringToFile(sourceFile, "Sample content for testing", "UTF-8");
@@ -27,12 +27,12 @@ public class App {
             // Copy file
             FileUtils.copyFile(sourceFile, destFile);
 
-            System.out.println("✅ File copied successfully!");
+            System.out.println(" File copied successfully!");
             System.out.println("Source: " + sourceFile.getAbsolutePath());
             System.out.println("Destination: " + destFile.getAbsolutePath());
 
         } catch (IOException e) {
-            System.err.println("❌ Error occurred: " + e.getMessage());
+            System.err.println("Error occurred: " + e.getMessage());
             e.printStackTrace();
         }
     }
