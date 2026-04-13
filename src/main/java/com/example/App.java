@@ -1,56 +1,39 @@
 package com.example;
 
-/**
- * Hello world!
- *
- */
-// Import FileUtils class from Apache Commons IO library
-// This is used to perform file operations like copying files
 import org.apache.commons.io.FileUtils;
-
-// Import File class to represent file and directory pathnames
 import java.io.File;
-
-// Import IOException to handle input-output errors
 import java.io.IOException;
-
-// Import ImmutableList from Google Guava library
-// ImmutableList creates a list that cannot be modified after creation
 import com.google.common.collect.ImmutableList;
 
-// Define the main class
-public class App 
-{
-    // Main method - program execution starts from here
-    public static void main( String[] args )
-    {
-        // Create an immutable list of strings (fruits)
-        // This list cannot be changed (no add/remove allowed)
+public class App {
+
+    public static void main(String[] args) {
+
+        // Immutable list using Guava
         ImmutableList<String> fruits = ImmutableList.of("Apple", "Banana", "Cherry");
-        
-        // Print the list of fruits to the console
-        System.out.println(fruits);
-        
-        // Create a File object representing the source file
+        System.out.println("Fruits List: " + fruits);
+
+        // Define files
         File sourceFile = new File("source.txt");
-        
-        // Create a File object representing the destination file
         File destFile = new File("destination.txt");
 
         try {
-            // Copy the contents of source.txt to destination.txt
-            // Using Apache Commons IO FileUtils class
+            // 🔥 Create source file if it doesn't exist
+            if (!sourceFile.exists()) {
+                System.out.println("source.txt not found. Creating file...");
+                FileUtils.writeStringToFile(sourceFile, "Sample content for testing", "UTF-8");
+            }
+
+            // Copy file
             FileUtils.copyFile(sourceFile, destFile);
-            
-            // Print success message if file is copied
-            System.out.println("File copied successfully!");
-        } 
-        catch (IOException e) {
-            // If any error occurs during file copying,
-            // this block will handle the exception
-            
-            // Print error message
-            System.err.println("Error occurred while copying file: " + e.getMessage());
+
+            System.out.println("✅ File copied successfully!");
+            System.out.println("Source: " + sourceFile.getAbsolutePath());
+            System.out.println("Destination: " + destFile.getAbsolutePath());
+
+        } catch (IOException e) {
+            System.err.println("❌ Error occurred: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }
