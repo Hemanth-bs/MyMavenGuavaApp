@@ -2,15 +2,14 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven'   // Must match Jenkins Global Tool name
-        jdk 'JDK'       // Must match Jenkins JDK name
+        maven 'Maven'
     }
 
     stages {
 
         stage('Build') {
             steps {
-                sh 'mvn clean compile'
+                sh 'mvn clean install'
             }
         }
 
@@ -20,18 +19,19 @@ pipeline {
             }
         }
 
-        stage('Package') {
+        stage('Run Application') {
             steps {
-                sh 'mvn package'
+                sh 'mvn exec:java -Dexec.mainClass="com.example.App"'
             }
         }
-
-
     }
 
     post {
+        always {
+            echo 'Pipeline execution completed.'
+        }
         success {
-            echo 'Build and execution successful!'
+            echo 'Build successful!'
         }
         failure {
             echo 'Build failed!'
